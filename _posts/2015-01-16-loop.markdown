@@ -50,40 +50,59 @@ inside the getter, it got to the first line which states -
 NSString *capitalizedName = [self.name capitalizedString];
 {% endhighlight %} 
 
-It goes thrghu the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
+It read trough the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
 {% highlight objective-c %} 
 self.name 
 {% endhighlight %} 
 
-The compiler then "went" to get the `name` from the getter.
-{% highlight objective-c %}
-- (NSString *)name;
-{% endhighlight %}
-
-inside the getter, it got to the first line which states - 
+So it went back to the beggining of the `name` getter, inside the getter, it got to the first line which states - 
 {% highlight objective-c %} 
 NSString *capitalizedName = [self.name capitalizedString];
 {% endhighlight %} 
 
-It goes thrghu the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
+It read trough the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
 {% highlight objective-c %} 
 self.name 
 {% endhighlight %} 
 
-The compiler then "went" to get the `name` from the getter.
-{% highlight objective-c %}
-- (NSString *)name;
-{% endhighlight %}
-
-inside the getter, it got to the first line which states - 
+So it went back to the beggining of the `name` getter, inside the getter, it got to the first line which states - 
 {% highlight objective-c %} 
 NSString *capitalizedName = [self.name capitalizedString];
 {% endhighlight %} 
 
-It goes thrghu the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
+It read trough the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
 {% highlight objective-c %} 
 self.name 
 {% endhighlight %} 
+
+So it went back to the beggining of the `name` getter, inside the getter, it got to the first line which states - 
+{% highlight objective-c %} 
+NSString *capitalizedName = [self.name capitalizedString];
+{% endhighlight %} 
+
+It read trough  the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
+{% highlight objective-c %} 
+self.name 
+{% endhighlight %} 
+
+So it went back to the beggining of the `name` getter, inside the getter, it got to the first line which states - 
+{% highlight objective-c %} 
+NSString *capitalizedName = [self.name capitalizedString];
+{% endhighlight %} 
+
+It read trough  the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
+{% highlight objective-c %} 
+self.name 
+{% endhighlight %} 
+
+And again, and again, and again.......
+
+
+**How to fix it ?**
+
+The fix is simple, all we need to do it to 
+
+
 
 
 [link-1]: http://en.wikipedia.org/wiki/Stack_overflow
