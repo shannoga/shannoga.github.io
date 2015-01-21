@@ -10,9 +10,9 @@ One of the most annoying, hard to notice mistakes I stumbled upon is to import a
 #import “SomeClass.m”
 {% endhighlight %}
 
-xCode will probably will throw this error - `Linker command failed with exit code 1 (use -v to see invocation)`, and in the issues navigator you will find complines about `duplicate symbols` in your **SomeClass**.
+xCode will probably will throw this error - `Linker command failed with exit code 1 (use -v to see invocation)`, and in the issues navigator you will find complines about `duplicate symbols` in your SomeClass.
 
-The duplicates complain is the hint that the compiler "sees" duplicate decleraitions of the iVars in your **SomeClass**. Ususally seeing this error will make you look for duplicate declerations in the file, but this time you will not find any and swear that the lust time you touched this class wan 3 mothes ago. 
+The duplicates complain is the hint that the compiler "sees" duplicate decleraitions of the iVars in your SomeClass. Ususally seeing this error will make you look for duplicate declerations in the file, but this time you will not find any and swear that the lust time you touched this class wan 3 mothes ago. At this point you should stop, go to the search box and type : `#import “SomeClass.m”`.
 
 The annoying part is that xCode autocompletion can help you mistakenly import the `.m` file as it always appears in the suggestions of the imports. Why? Maybe because it is [technically possible][link-1]. IMHO Apple should remove the `.m` files from the suggestions as it is rarely needed and causes more mistakes then help anyone. But for now it is there so be aware 
 
