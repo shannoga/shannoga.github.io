@@ -2,10 +2,8 @@
 title: My Bad
 email: shannoga@me.com
 description: > # this means to ignore newlines until "baseurl:"
-  This Blog is a diary of my (Mainly Objective-C and soon Swift) coding mistakes. 
-  I hope putting them on the screen will help me avoid them and might help others.
-  I will not cal myself a new programmer but I have defintly a lot more to learn, so if you find a mistake in my posts or want to contribute a mistake you made you are more then welcome. Happy coding!
-baseurl: "" # the subpath of your site, e.g. /blog/
+  This Blog is a diary of my (Mainly Objective-C and soon Swift) coding mistakes. I hope putting them on the screen will help me avoid them and might help others. I will not cal myself a new programmer but I have defiantly a lot more to learn, so if you find a mistake in my posts or want to contribute a mistake you made you are more then welcome. Happy coding! 
+baseurl: "http://shannoga.github.io" # the subpath of your site, e.g. /blog/
 url: "http://shannoga.github.io" # the base hostname & protocol for your site
 twitter_username: shannoga
 github_username:  shannoga
