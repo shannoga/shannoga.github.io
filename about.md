@@ -5,7 +5,7 @@ permalink: /about/
 ---
 
 
-Discovered programming late in my life, I started with [ActionScript3][actionscript-link] which I loved and will always remember as my first, real, programming language. Then the iPhone was born and like many others I was sure I am going to be a rich man, well, like many others I did not but I have learned a lot and discovered my love to coding. 
+Discovered programming late in my life, I started with [ActionScript3][actionscript-link] which I loved and will always remember as my first, real, programming language. Then the iPhone was born and like many others I was sure I am going to be a rich man, well, like many others I did not but I have learned a lot and discovered my love for coding. 
 
 As a late-bloomer I have a lot to learn and in the way I am making mistakes, some stupid, some annoying and some from lake of knowledge. Not from all I have learned but all where the only way to learn. 
 
