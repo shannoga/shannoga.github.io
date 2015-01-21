@@ -1,18 +1,45 @@
 ---
 layout: post
-title:  "inifnite loop"
+title:  "infinite recursion"
 date:   2015-01-16 22:41:57
 categories: mistake objective-c xcode
 ---
 
 One of the mos common mistakes that is preety easy to understand and fix is calling a property from it's own getter.
 
+Let's say we have a string property called `name`  
 
 {% highlight objective-c %}
+@property (nonatomic, copy) NSString * name;
+{% endhighlight %}
 
+Since this is a persons name, every time we access this property we want to capitalize it, so we use the getter to do that -
+
+{% highlight objective-c %}
 - (NSString *)name
 {
-    return self.name;
+    NSString *capitalizedName = [self.name capitalizedString];
+    return capitalizedName;
 }
-
 {% endhighlight %}
+
+And lastly somewhere in our code we access the `name` property -
+
+{% highlight objective-c %}
+NSString *nameText = [NSString stringWithFormat:@"Hello %@",self.name];
+{% endhighlight %}
+
+Runing the app will cause xCode to stuck for a few seconds and then we will crash.
+
+**Why ?**
+
+What we did is created an `infinite recursion` and caused a [Stack overflow][link-1], and simpler -
+
+We just created a method that calls itself again and again and again and again.............and again...
+As you can see calling  {% highlight objective-c %} [NSString stringWithFormat:@"Hello %@",self.name];{% endhighlight %} is 100% isentical to {% highlight objective-c %} [self.name capitalizedString]{% endhighlight %} that we used in the getter.
+
+callig self.name tells the compiler to access the getter 
+
+
+
+[link-1]: http://en.wikipedia.org/wiki/Stack_overflow
