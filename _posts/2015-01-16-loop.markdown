@@ -33,12 +33,25 @@ Runing the app will cause xCode to stuck for a few seconds and then we will cras
 
 **Why ?**
 
-What we did is created an `infinite recursion` and caused a [Stack overflow][link-1], and simpler -
+What we did is created an `infinite recursion` that causes a [Stack overflow][link-1], and simpler - We just created a method that calls itself again and again and again and again.............and again...
 
-We just created a method that calls itself again and again and again and again.............and again...
-As you can see calling  {% highlight objective-c %} [NSString stringWithFormat:@"Hello %@",self.name];{% endhighlight %} is 100% isentical to {% highlight objective-c %} [self.name capitalizedString]{% endhighlight %} that we used in the getter.
+When we wanted to access the `name` property, we used 
+{% highlight objective-c %} 
+self.name
+{% endhighlight %} 
 
-callig self.name tells the compiler to access the getter 
+The compiler then "went" to get the `name` from the getter.
+{% highlight objective-c %}
+- (NSString *)name;
+{% endhighlight %}
+
+inside the getter, it got to the first line which states - 
+{% highlight objective-c %} 
+NSString *capitalizedName = [self.name capitalizedString];
+{% endhighlight %} 
+
+It goes thrghu the first line joyfuly until it gets to the self.name that asks it to go to the `name` getter, So it goes to the beggining of our getter and reads it joyfuly until it gets to the self.name that asks it to go to the `name` getter, So it goes to the beggining of our getter and reads it joyfuly until it gets to the self.name that asks it to go to the `name` getter, So it goes to the beggining of our getter and reads it joyfuly until it gets to the self.name that asks it to go to the `name` getter, So it goes to the beggining of our getter and reads it joyfuly until it gets to the self.name that asks it to go to the `name` getter, So it goes to the beggining of our getter and reads it joyfuly until it gets to the self.name that asks it to go to the `name` getter, So it goes to the beggining of our getter and reads it joyfuly until it gets to the self.name that asks it to go to the `name` getter, So it goes to the beggining of our getter and reads it joyfuly until it gets to the self.name that asks it to go to the `name` getter.....
+
 
 
 
