@@ -1,12 +1,12 @@
 ---
 layout: post
 title:  "infinite recursion"
-subtitle: "Calling a method from within itself"
+subtitle: "never access a getter of a property from within itself"
 date:   2015-01-16 22:41:57
 categories: mistake objective-c xcode
 ---
 
-One of the mos common mistakes that is preety easy to understand and fix is calling a property from it's own getter.
+One of the most common mistakes that is easy to understand and fix is calling a property from it's own getter.
 
 Let's say we have a string property called `name`  
 
@@ -14,7 +14,7 @@ Let's say we have a string property called `name`
 @property (nonatomic, copy) NSString * name;
 {% endhighlight %}
 
-Since this is a persons name, every time we access this property we want to capitalize it, so we use the getter to do that -
+Since this is a persons name, every time we access this property we want to capitalise it, so we use the getter to do that -
 
 {% highlight objective-c %}
 - (NSString *)name
@@ -30,13 +30,15 @@ And lastly somewhere in our code we access the `name` property -
 NSString *nameText = [NSString stringWithFormat:@"Hello %@",self.name];
 {% endhighlight %}
 
-Runing the app will cause xCode to stuck for a few seconds and then we will crash.
+Running the app will cause xCode to stuck for a few seconds and then we will crash.
 
-**Why ?**
+***What happened?***
 
-What we did is created an `infinite recursion` that causes a [Stack overflow][link-1], and simpler - We just created a method that calls itself again and again and again and again.............and again...
+What we did is created an `infinite recursion` that caused a [Stack overflow][link-1], and simpler - We just created a method that calls itself again and again and again and again.............and again...
 
-When we wanted to access the `name` property, we used 
+***How did it happen?***
+
+When we wanted to access the `name` property, we called 
 {% highlight objective-c %} 
 self.name
 {% endhighlight %} 
@@ -51,59 +53,70 @@ inside the getter, it got to the first line which states -
 NSString *capitalizedName = [self.name capitalizedString];
 {% endhighlight %} 
 
-It read trough the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
+It read trough the first line joyfully and right after the `NSString *capitalizedName =` it got to this chunk of code - 
 {% highlight objective-c %} 
 self.name 
 {% endhighlight %} 
 
-So it went back to the beggining of the `name` getter, inside the getter, it got to the first line which states - 
+So it "went" back to the beginning of the `name` getter and read it again until it read `self.name` and "went" back to the beginning of the `name` getter and read it again until it read `self.name` and "went" back to the beginning of the `name` getter and read it again until it read `self.name` and "went" back to the beginning of the `name` getter and read it again until it read `self.name` and "went" back to the beginning of the `name` getter and read it again until it read `self.name` and "went" back to the beginning of the `name` getter and read it again until it read `self.name` and "went" back to the beginning of the `name` getter and read it again until it read `self.name` and "went" back to the beginning of the `name` getter and read it again until it read `self.name` and did it again and again and again.... 
+
+
+
+**How to avoid it ?**
+
+The fix is simple, all we need to do it to prevent the getter to call itself. We can do that by using the iVar instead of useing the property -
+
+{% highlight objective-c %}
+- (NSString *)name
+{
+    NSString *capitalizedName = [_name capitalizedString];
+    return capitalizedName;
+}
+{% endhighlight %}
+
+Using the iVar the compiler will not access the getter.
+
+***Last notes***
+
+This `infinite recursion` can happen when calling a method from within itself, but this is more obvious usually. 
+
 {% highlight objective-c %} 
-NSString *capitalizedName = [self.name capitalizedString];
-{% endhighlight %} 
+- (void)callMe
+{
+    [self callMe];
+}
+{% endhighlight %}
 
-It read trough the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
+A common scenario where we can fall this pit is when lazy loading a property -
+
 {% highlight objective-c %} 
-self.name 
-{% endhighlight %} 
+@property (nonatomic, strong) NSArray *list;
 
-So it went back to the beggining of the `name` getter, inside the getter, it got to the first line which states - 
+- (NSArray *)list
+{
+   if (!self.list)
+   {
+        self.list = @[@"1",@"2",@"3",@"4"];
+   }
+   return self.list;
+}
+{% endhighlight %}
+
+While it should be -
+
 {% highlight objective-c %} 
-NSString *capitalizedName = [self.name capitalizedString];
-{% endhighlight %} 
+@property (nonatomic, strong) NSArray *list;
 
-It read trough the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
-{% highlight objective-c %} 
-self.name 
-{% endhighlight %} 
-
-So it went back to the beggining of the `name` getter, inside the getter, it got to the first line which states - 
-{% highlight objective-c %} 
-NSString *capitalizedName = [self.name capitalizedString];
-{% endhighlight %} 
-
-It read trough  the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
-{% highlight objective-c %} 
-self.name 
-{% endhighlight %} 
-
-So it went back to the beggining of the `name` getter, inside the getter, it got to the first line which states - 
-{% highlight objective-c %} 
-NSString *capitalizedName = [self.name capitalizedString];
-{% endhighlight %} 
-
-It read trough  the first line joyfuly and right after the `NSString *capitalizedName =` it got to this chunk of code - 
-{% highlight objective-c %} 
-self.name 
-{% endhighlight %} 
-
-And again, and again, and again.......
-
-
-**How to fix it ?**
-
-The fix is simple, all we need to do it to 
+- (NSArray *)list
+{
+   if (_self.list)
+   {
+      _list = @[@"1",@"2",@"3",@"4"];
+   }
+   return _list;
+}
+{% endhighlight %}
 
 
 
-
-[link-1]: http://en.wikipedia.org/wiki/Stack_overflow
+[link-1]: http://en.wikipedia.org/wiki/Stack_overflow 
