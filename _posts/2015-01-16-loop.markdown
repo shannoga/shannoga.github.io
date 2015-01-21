@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "infinite recursion"
+subtitle: "Calling a method from within itself"
 date:   2015-01-16 22:41:57
 categories: mistake objective-c xcode
 ---
