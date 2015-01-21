@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "infinite recursion"
-subtitle: "never access a getter of a property from within itself"
+title:  "Infinite recursion"
+subtitle: "Never access a property from it's own getter"
 date:   2015-01-16 22:41:57
 categories: mistake objective-c xcode
 ---
@@ -66,6 +66,7 @@ So it "went" back to the beginning of the `name` getter and read it again until 
 
 The fix is simple, all we need to do it to prevent the getter to call itself. We can do that by using the iVar instead of useing the property -
 
+
 {% highlight objective-c %}
 - (NSString *)name
 {
@@ -75,6 +76,15 @@ The fix is simple, all we need to do it to prevent the getter to call itself. We
 {% endhighlight %}
 
 Using the iVar the compiler will not access the getter.
+
+To further understand, consider this code -
+
+{% highlight objective-c %}
+self.name = @"asif";
+NSLog(%@, self.name); //Will log "Asif" as we used the getter
+NSLog(%@, _name); //Will log "asif" as we did not used the getter
+{% endhighlight %}
+
 
 ***Last notes***
 
